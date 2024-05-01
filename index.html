@@ -42,21 +42,15 @@
         width: 85%; /* Adjust width to prevent touching screen ends */
         max-width: 600px; /* Limit maximum width */
         margin: 20px auto; /* Center the container horizontally and add top margin */
-        animation: borderAnimation 6s infinite alternate; /* Border animation */
-        animation-delay: 2s; /* Delay the border animation */
+        animation: tada 3s; /* Tada animation */
     }
-@keyframes borderAnimation {
-        0% { border-color: #9c27b0; }
-        10% { border-color: #673ab7; }
-        20% { border-color: #3f51b5; }
-        30% { border-color: #2196f3; }
-        40% { border-color: #03a9f4; }
-        50% { border-color: #00bcd4; }
-        60% { border-color: #009688; }
-        70% { border-color: #4caf50; }
-        80% { border-color: #8bc34a; }
-        90% { border-color: #cddc39; }
-        100% { border-color: #ffeb3b; }
+
+    @keyframes tada {
+        0% { transform: scale(1); }
+        10%, 20% { transform: scale(0.9) rotate(-3deg); }
+        30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+        40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
+        100% { transform: scale(1) rotate(0); }
     }
 
     .lyrics-container {
