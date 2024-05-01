@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entertainment Website</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+        background: linear-gradient(to right, 
+            #9c27b0, #673ab7, #3f51b5, #2196f3, #03a9f4, #00bcd4, #009688, #4caf50, #8bc34a, #cddc39, #ffeb3b, #ffc107, #ff9800, #ff5722, #f44336, #e91e63, #9c27b0,
+            #673ab7, #3f51b5, #2196f3, #03a9f4, #00bcd4, #009688, #4caf50, #8bc34a, #cddc39, #ffeb3b, #ffc107, #ff9800, #ff5722, #f44336, #e91e63
+            ); /* Gradient with specified colors */
+        background-size: 2400% auto; /* Adjust background size for smooth transition */
+        animation: gradientAnimation 40s linear infinite; /* Animation */
+    }
+
+    @keyframes gradientAnimation {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 100% 50%; }
+    }
+
+    .background-image {
+        background-image: url('I1.png'); /* Your background image */
+        background-size: contain;
+        background-position: center;
+        height: 60vh; /* Adjust as needed */
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        color: white;
+        position: relative;
+        border: 7px solid #9c27b0;
+        border-radius: 30px; /* Rounded border */
+        overflow: hidden; /* Prevent image from overflowing */
+        width: 85%; /* Adjust width to prevent touching screen ends */
+        max-width: 600px; /* Limit maximum width */
+        margin: 20px auto; /* Center the container horizontally and add top margin */
+    }
+
+    .lyrics-container {
+        border: 5.5px solid #9c27b0;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        width: 85%;
+        text-align: center;
+        padding: 40px 20px; /* Adjust padding to change the height */
+        border-radius: 50px; /* Rounded corners */
+        margin: 0 auto; /* Center horizontally */
+        margin-bottom: -20px; /* Adjust to position the container outside the background image */
+        overflow: hidden; /* Ensure text animation stays within container */
+    }
+
+    .lyrics {
+        font-size: 200%; /* Set font size to 150% */
+        font-family: 'Comic Neue', sans-serif; /* Specify Comic Neue font */
+        font-weight: bold; /* Set font weight to bold */
+        animation: slideInBottom 15s ease forwards; /* Animation for text appearing */
+        color: white;
+    }
+
+    .last-line {
+        font-size: 187%; /* Set font size to 150% */
+    }
+
+    @keyframes slideInBottom {
+        0% {
+            opacity: 0;
+            transform: translateY(100%);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .play-button {
+        cursor: pointer;
+        position: fixed;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%) rotate(0deg); /* Initial rotation */
+        z-index: 9999;
+        width: 120px; /* Adjust width */
+        height: 120px; /* Adjust height */
+        transition: transform 0.5s ease; /* Smooth transition for rotation */
+        /* Prevent blue highlight */
+        -webkit-tap-highlight-color: transparent;
+        outline: none;
+    }
+
+    .play-button.clicked {
+        transform: translateX(-50%) rotate(360deg); /* Rotation on click */
+        opacity: 0; /* Hide play button after rotation */
+    }
+</style>
+</head>
+<body>
+<div class="background-image">
+    <!-- Background image -->
+</div>
+<div class="lyrics-container">
+    <!-- Lyrics will be dynamically added here -->
+    <div class="lyrics" id="lyrics"></div>
+</div>
+<audio id="song" loop>
+    <source src="Anjam.mp3" type="audio/mpeg"> <!-- Your song file -->
+    Your browser does not support the audio element.
+</audio>
+
+<img class="play-button" src="playbn.png" alt="Play Button" id="playButton">
+
+
+<script>
+    const lyrics = [
+        { text: "Jo Dil🫀 meh Bhara Tune🫵🏼", duration: 6600 },
+        { text: "Dekhegi uss Zeher ko", duration: 3400 },
+        { text: "Bhugtegi mere gam koh", duration: 3500 },
+        { text: "Meri aah ke kahar ko", duration: 3300 },
+        { text: "Apni khudgarzi ka anjam Dekhegihihi", duration: 7000, last: true },
+        // Add more lyrics lines as needed
+    ];
+
+    let currentLine = 0;
+    const lyricsElement = document.getElementById('lyrics');
+
+    function displayLyrics() {
+        const currentLyric = lyrics[currentLine];
+        lyricsElement.textContent = currentLyric.text;
+        if (currentLyric.last) {
+            lyricsElement.classList.add('last-line');
+        } else {
+            lyricsElement.classList.remove('last-line');
+        }
+        setTimeout(displayLyrics, currentLyric.duration); // Set timeout based on line duration
+        currentLine = (currentLine + 1) % lyrics.length;
+    }
+
+    const playButton = document.getElementById('playButton');
+    playButton.addEventListener('click', startPlayback);
+
+    function startPlayback() {
+        const song = document.getElementById('song');
+        song.play();
+        playButton.classList.add('clicked'); // Add class to start rotation animation and hide the button
+        displayLyrics();
+    }
+</script>
+</body>
+</html>
