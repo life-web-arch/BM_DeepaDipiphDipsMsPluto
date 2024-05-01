@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Entertainment Website</title>
+<title>BM🐼_🐿️DeepaDipiphDipsMsPluto🐮</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@
         100% { background-position: 100% 50%; }
     }
 
-    .background-image {
+    #bgImage {
         background-image: url('I1.png'); /* Your background image */
         background-size: contain;
         background-position: center;
@@ -42,9 +42,16 @@
         width: 85%; /* Adjust width to prevent touching screen ends */
         max-width: 600px; /* Limit maximum width */
         margin: 20px auto; /* Center the container horizontally and add top margin */
+        animation: fadeIn 4s ease forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     .lyrics-container {
+        display: none; /* Initially hide the lyrics container */
         border: 5.5px solid #9c27b0;
         background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
         width: 85%;
@@ -60,7 +67,7 @@
         font-size: 200%; /* Set font size to 150% */
         font-family: 'Comic Neue', sans-serif; /* Specify Comic Neue font */
         font-weight: bold; /* Set font weight to bold */
-        animation: slideInBottom 15s ease forwards; /* Animation for text appearing */
+        animation: slideInBottom 13s ease forwards; /* Animation for text appearing */
         color: white;
     }
 
@@ -84,27 +91,26 @@
         position: fixed;
         bottom: 8px;
         left: 50%;
-        transform: translateX(-50%) rotate(0deg); /* Initial rotation */
+        transform: translateX(-50%);
         z-index: 9999;
         width: 120px; /* Adjust width */
         height: 120px; /* Adjust height */
-        transition: transform 0.5s ease; /* Smooth transition for rotation */
+        transition: opacity 0.5s ease; /* Smooth transition for opacity */
         /* Prevent blue highlight */
         -webkit-tap-highlight-color: transparent;
         outline: none;
     }
 
-    .play-button.clicked {
-        transform: translateX(-50%) rotate(360deg); /* Rotation on click */
-        opacity: 0; /* Hide play button after rotation */
+    .rotate {
+        opacity: 0; /* Hide play button */
     }
 </style>
 </head>
 <body>
-<div class="background-image">
+<div class="background-image" id="bgImage">
     <!-- Background image -->
 </div>
-<div class="lyrics-container">
+<div class="lyrics-container" id="lyricsContainer">
     <!-- Lyrics will be dynamically added here -->
     <div class="lyrics" id="lyrics"></div>
 </div>
@@ -118,16 +124,18 @@
 
 <script>
     const lyrics = [
-        { text: "Jo Dil🫀 meh Bhara Tune🫵🏼", duration: 6600 },
-        { text: "Dekhegi uss Zeher ko", duration: 3400 },
-        { text: "Bhugtegi mere gam koh", duration: 3500 },
-        { text: "Meri aah ke kahar ko", duration: 3300 },
-        { text: "Apni khudgarzi ka anjam Dekhegihihi", duration: 7000, last: true },
+        { text: "Jo Dil🫀 meh Bhara Tune🫵🏼", durations: [6300, 6000] },
+        { text: "Dekhegi uss Zeher ko", durations: [3400, 3300] },
+        { text: "Bhugtegi mere Gam koh", durations: [3400, 3200] },
+        { text: "Meri Aah ke Kahar ko", durations: [3450, 3400] },
+        { text: "Apni Khudgarzi ka Anjam Dekhegihihi", durations: [7000, 6800], last: true },
         // Add more lyrics lines as needed
     ];
 
     let currentLine = 0;
+    let loopCount = 0;
     const lyricsElement = document.getElementById('lyrics');
+    const lyricsContainer = document.getElementById('lyricsContainer'); // Get the lyrics container
 
     function displayLyrics() {
         const currentLyric = lyrics[currentLine];
@@ -137,8 +145,13 @@
         } else {
             lyricsElement.classList.remove('last-line');
         }
-        setTimeout(displayLyrics, currentLyric.duration); // Set timeout based on line duration
+        const durationIndex = loopCount % currentLyric.durations.length;
+        const duration = currentLyric.durations[durationIndex];
+        setTimeout(displayLyrics, duration); // Set timeout based on line duration
         currentLine = (currentLine + 1) % lyrics.length;
+        if (currentLine === 0) {
+            loopCount++;
+        }
     }
 
     const playButton = document.getElementById('playButton');
@@ -147,8 +160,13 @@
     function startPlayback() {
         const song = document.getElementById('song');
         song.play();
-        playButton.classList.add('clicked'); // Add class to start rotation animation and hide the button
+        playButton.classList.add('rotate'); // Add class to hide the play button
         displayLyrics();
+        lyricsContainer.style.display = 'block'; // Show the lyrics container when play button is clicked
+        // Remove the play button from the DOM after the animation completes
+        setTimeout(() => {
+            playButton.remove();
+        });
     }
 </script>
 </body>
