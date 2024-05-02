@@ -42,7 +42,7 @@
         width: 85%; /* Adjust width to prevent touching screen ends */
         max-width: 600px; /* Limit maximum width */
         margin: 20px auto; /* Center the container horizontally and add top margin */
-        animation: tada 3s; /* Tada animation */
+        animation: tada 3s, borderAnimation1 6s infinite alternate; /* Border and tada animation */
     }
 
     @keyframes tada {
@@ -64,14 +64,14 @@
         margin: 0 auto; /* Center horizontally */
         margin-bottom: 20px; /* Adjust to position the container outside the background image */
         overflow: hidden; /* Ensure text animation stays within container */
-        animation: borderAnimation 6s infinite alternate; /* Border animation */
+        animation: borderAnimation1 6s infinite alternate; /* Border animation */
     }
 
     .lyrics {
         font-size: 220%; /* Set font size to 150% */
         font-family: 'Comic Neue', sans-serif; /* Specify Comic Neue font */
         font-weight: bold; /* Set font weight to bold */
-        animation: slideInBottom 13s ease forwards; /* Animation for text appearing */
+        animation: slideInBottom 13s ease forwards, glowAnimation 100s ease-in-out infinite alternate; /* Animation for text appearing and glow effect */
         color: white;
     }
 
@@ -87,6 +87,18 @@
         100% {
             opacity: 1;
             transform: translateY(0);
+        }
+    }
+
+    @keyframes glowAnimation {
+        0% {
+            text-shadow: 0 0 20px #ff00de;
+        }
+        50% {
+            text-shadow: 0 0 40px #ff00de;
+        }
+        100% {
+            text-shadow: 0 0 20px #ff00de;
         }
     }
 
@@ -108,6 +120,20 @@
     .rotate {
         opacity: 0; /* Hide play button */
     }
+
+    @keyframes borderAnimation1 {
+        0% { border-color: #9c27b0; }
+        10% { border-color: #673ab7; }
+        20% { border-color: #3f51b5; }
+        30% { border-color: #2196f3; }
+        40% { border-color: #03a9f4; }
+        50% { border-color: #00bcd4; }
+        60% { border-color: #009688; }
+        70% { border-color: #4caf50; }
+        80% { border-color: #8bc34a; }
+        90% { border-color: #cddc39; }
+        100% { border-color: #ffeb3b; }
+    }
 </style>
 </head>
 <body>
@@ -128,11 +154,11 @@
 
 <script>
     const lyrics = [
-        { text: "Jo Dil🫀meh Bhara Tune🫵🏼", durations: [6350, 6250,6200,6200,6130] },
-        { text: "Dekhegi👀 uss Zeher☣️ ko", durations: [3500, 3400,3350,3400,3330] },
-        { text: "Bhugtegi mere Gam koh😫", durations: [3500, 3400,3350,3400,3330] },
-        { text: "Meri Aah ke Kahar ko😖", durations: [3500, 3400,3350,3300,3230] },
-        { text: "Apni Khudgarzi ka Anjam Dekhegihihi😓😭", durations: [7000, 6900,6920,6780,6780], last: true },
+        { text: "Jo Dil🫀meh Bhara Tune🫵🏼", durations: [6270, 6100,6180,6220,6080] },
+        { text: "Dekhegi👀 uss Zeher☣️ ko", durations: [3420, 3220,3360,3420,3280] },
+        { text: "Bhugtegi mere Gam koh😫", durations: [3420, 3250,3360,3420,3280] },
+        { text: "Meri Aah ke Kahar ko😖", durations: [3420, 3250,3360,3320,3180] },
+        { text: "Apni Khudgarzi ka Anjam Dekhegihihi😓😭", durations: [6920, 6750,6930,6800,6730], last: true },
         // Add more lyrics lines as needed
     ];
 
